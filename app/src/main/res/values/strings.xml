@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HomeTask</string>
+    <string name="bmi_profile">Profile</string>
+    <string name="bmi_repositories">Repositories</string>
 </resources>
