@@ -2,4 +2,23 @@
     <string name="app_name">HomeTask</string>
     <string name="bmi_profile">Profile</string>
     <string name="bmi_repositories">Repositories</string>
+
+    <string name="profile_title_text">Profile</string>
+    <string name="profile_date_label">Member since: </string>
+    <string name="profile_date_text">17.05.2018</string>
+    <string name="profile_nick_label">Nick name:  </string>
+    <string name="profile_nick_name">\@NickName</string>
+    <string name="profile_full_name_label">Full name:  </string>
+    <string name="profile_full_name">Saprykin Andrey</string>
+
+    <string name="repositories_title_text">Yours repositories</string>
+    <string name="repositories_update_label">last update: </string>
+
+    <string name="stub_repo_name_1">Repo name 1</string>
+    <string name="stub_repo_name_2">Repo name 2</string>
+    <string name="stub_repo_name_3">Repo name 3</string>
+
+    <string name="stub_repo_update_1">27.05.2018</string>
+    <string name="stub_repo_update_2">10 minutes ago  </string>
+    <string name="stub_repo_update_3">2 hours ago</string>
 </resources>
