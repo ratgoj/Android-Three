@@ -38,8 +38,8 @@ public class ProfileFragment extends MvpAppCompatFragment implements ProfileView
                              Bundle savedInstanceState) {
         profileView = inflater.inflate(R.layout.fragment_profile, container, false);
         profileImage = profileView.findViewById(R.id.profile_image);
-        Log.d(PROFILE_TAG, "Presenter: " + profilePresenter);
         profilePresenter.setProfileInfo();
+        profilePresenter.setProfileImage();
         return profileView;
     }
 
