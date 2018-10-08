@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.home_task.saprykin.hometask.R;
-import com.home_task.saprykin.hometask.model.RepoDataModel;
-import com.home_task.saprykin.hometask.model.adapters.RepositoriesAdapter;
 import com.home_task.saprykin.hometask.presenters.RepoPresenter;
 import com.home_task.saprykin.hometask.views.interfaces.RepositoryVew;
 

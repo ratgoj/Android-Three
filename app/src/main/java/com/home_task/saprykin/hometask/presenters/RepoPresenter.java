@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.home_task.saprykin.hometask.model.RepoDataModel;
-import com.home_task.saprykin.hometask.model.adapters.RepositoriesAdapter;
+import com.home_task.saprykin.hometask.views.adapters.RepositoriesAdapter;
 import com.home_task.saprykin.hometask.views.interfaces.RepositoryVew;
 
 /**
