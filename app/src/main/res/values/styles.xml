@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TitleStyle" parent="AppTheme">
+        <item name="android:textSize">@dimen/text_title_size</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
 </resources>

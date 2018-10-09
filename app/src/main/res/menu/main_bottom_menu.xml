@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_person_24dp"
+        android:title="@string/bmi_profile"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/item_repositories"
+        android:enabled="true"
+        android:icon="@drawable/ic_repo_list_24dp"
+        android:title="@string/bmi_repositories"
+        app:showAsAction="ifRoom" />
+</menu>
