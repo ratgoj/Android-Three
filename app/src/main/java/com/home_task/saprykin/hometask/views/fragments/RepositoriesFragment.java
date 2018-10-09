@@ -14,7 +14,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.presenters.RepoPresenter;
-import com.home_task.saprykin.hometask.views.interfaces.RepositoryVew;
+import com.home_task.saprykin.hometask.presenters.interfaces.RepositoryVew;
 
 /**
  * A simple {@link Fragment} subclass.

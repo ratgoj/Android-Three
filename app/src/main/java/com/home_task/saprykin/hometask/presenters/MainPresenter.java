@@ -5,7 +5,7 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.views.fragments.ProfileFragment;
 import com.home_task.saprykin.hometask.views.fragments.RepositoriesFragment;
-import com.home_task.saprykin.hometask.views.interfaces.FragmentContainerView;
+import com.home_task.saprykin.hometask.presenters.interfaces.FragmentContainerView;
 
 @InjectViewState
 public class MainPresenter extends MvpPresenter<FragmentContainerView> {

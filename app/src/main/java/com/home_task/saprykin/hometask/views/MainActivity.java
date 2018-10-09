@@ -12,7 +12,7 @@ import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.presenters.MainPresenter;
 import com.home_task.saprykin.hometask.views.fragments.ProfileFragment;
 import com.home_task.saprykin.hometask.views.fragments.RepositoriesFragment;
-import com.home_task.saprykin.hometask.views.interfaces.FragmentContainerView;
+import com.home_task.saprykin.hometask.presenters.interfaces.FragmentContainerView;
 
 public class MainActivity extends MvpAppCompatActivity implements FragmentContainerView {
     BottomNavigationView bottomNavigationView;

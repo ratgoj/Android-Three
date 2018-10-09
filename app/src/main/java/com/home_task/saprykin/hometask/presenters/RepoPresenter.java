@@ -6,7 +6,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.home_task.saprykin.hometask.model.RepoDataModel;
 import com.home_task.saprykin.hometask.views.adapters.RepositoriesAdapter;
-import com.home_task.saprykin.hometask.views.interfaces.RepositoryVew;
+import com.home_task.saprykin.hometask.presenters.interfaces.RepositoryVew;
 
 /**
  * Created by andrejsaprykin on 08/10/2018.

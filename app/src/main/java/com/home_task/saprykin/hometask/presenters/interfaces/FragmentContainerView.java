@@ -1,4 +1,4 @@
-package com.home_task.saprykin.hometask.views.interfaces;
+package com.home_task.saprykin.hometask.presenters.interfaces;
 
 import android.support.v4.app.Fragment;
 
