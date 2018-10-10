@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.MvpDelegate;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.PresenterType;
 import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.presenters.RepoPresenter;
 import com.home_task.saprykin.hometask.presenters.interfaces.RepositoryVew;
@@ -30,7 +32,7 @@ public class RepositoriesFragment extends MvpAppCompatFragment implements Reposi
     private RecyclerView repoRecyclerView;
     private RecyclerView.LayoutManager repoLayoutManager;
 
-    @InjectPresenter
+    @InjectPresenter(type = PresenterType.GLOBAL) //Указываем type = PresenterType.GLOBAL, что бы презентер не пересозвался вместе с фрагментом
     RepoPresenter presenter;
 
     public RepositoriesFragment() {
@@ -44,6 +46,8 @@ public class RepositoriesFragment extends MvpAppCompatFragment implements Reposi
         repoView = inflater.inflate(R.layout.fragment_repositories, container, false);
 
         initView(repoView);
+        if(presenter.getSearchQuery()!=null)
+            searchRepo.setText(presenter.getSearchQuery());
 
         return repoView;
     }
@@ -68,8 +72,7 @@ public class RepositoriesFragment extends MvpAppCompatFragment implements Reposi
 
             @Override
             public void afterTextChanged(Editable s) {
-                String query = s.toString();
-                presenter.searchRepo(query);
+                presenter.searchRepo(s.toString());
             }
         };
         searchRepo.addTextChangedListener(searchWatcher);
@@ -79,5 +82,10 @@ public class RepositoriesFragment extends MvpAppCompatFragment implements Reposi
     @Override
     public void onRepoItemClick(int position) {
         Log.d(REPO_TAG, "Click on Position: " + position);
+    }
+
+    @Override
+    public MvpDelegate getMvpDelegate() {
+        return super.getMvpDelegate();
     }
 }

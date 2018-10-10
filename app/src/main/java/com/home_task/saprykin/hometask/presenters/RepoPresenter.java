@@ -12,10 +12,12 @@ import com.home_task.saprykin.hometask.views.adapters.RepositoriesAdapter;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
@@ -27,6 +29,7 @@ public class RepoPresenter extends MvpPresenter<RepositoryVew> {
     private static final String REPO_PRESENTER_TAG = "Repository presenter";
     private RepoDataModel repoDataModel;
     private RepositoriesAdapter repoRecyclerAdapter;
+    private String searchQuery;
 
     public RepoPresenter() {
         repoDataModel = new RepoDataModel();
@@ -48,6 +51,7 @@ public class RepoPresenter extends MvpPresenter<RepositoryVew> {
 
     public void searchRepo(final String repoName) {
         if (repoName != null && !repoName.isEmpty()) {
+            searchQuery = repoName;
             Observable
                     .fromIterable(repoDataModel.getRepositoriesList())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -78,5 +82,9 @@ public class RepoPresenter extends MvpPresenter<RepositoryVew> {
         } else {
             repoRecyclerAdapter.updateData(repoDataModel.getRepositoriesList());
         }
+    }
+
+    public String getSearchQuery() {
+        return searchQuery;
     }
 }
