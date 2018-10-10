@@ -19,9 +19,6 @@ import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.presenters.RepoPresenter;
 import com.home_task.saprykin.hometask.presenters.interfaces.RepositoryVew;
 
-import io.reactivex.Observable;
-import io.reactivex.internal.operators.observable.ObservableJust;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -29,7 +26,7 @@ public class RepositoriesFragment extends MvpAppCompatFragment implements Reposi
     private static final String REPO_TAG = "Repository";
 
     private View repoView;
-    private EditText serchRepo;
+    private EditText searchRepo;
     private RecyclerView repoRecyclerView;
     private RecyclerView.LayoutManager repoLayoutManager;
 
@@ -51,13 +48,13 @@ public class RepositoriesFragment extends MvpAppCompatFragment implements Reposi
         return repoView;
     }
 
-    private void initView(View repoView){
+    private void initView(View repoView) {
         repoLayoutManager = new LinearLayoutManager(getActivity());
         repoRecyclerView = repoView.findViewById(R.id.repo_list);
         repoRecyclerView.setLayoutManager(repoLayoutManager);
         repoRecyclerView.setAdapter(presenter.getRepoRecyclerAdapter());
 
-        serchRepo = repoView.findViewById(R.id.repo_search);
+        searchRepo = repoView.findViewById(R.id.repo_search);
         TextWatcher searchWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -71,10 +68,11 @@ public class RepositoriesFragment extends MvpAppCompatFragment implements Reposi
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                String query = s.toString();
+                presenter.searchRepo(query);
             }
         };
-
+        searchRepo.addTextChangedListener(searchWatcher);
     }
 
 

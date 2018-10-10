@@ -70,4 +70,8 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
         return repoList.size();
     }
 
+    public void updateData(List<RepoItem> newRepoList) {
+        this.repoList = newRepoList;
+        notifyDataSetChanged();
+    }
 }
