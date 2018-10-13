@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.arellomobile.mvp.viewstate.MvpViewState;
 import com.home_task.saprykin.hometask.model.RepoDataModel;
 import com.home_task.saprykin.hometask.model.RepoItem;
 import com.home_task.saprykin.hometask.presenters.interfaces.RepositoryVew;
@@ -25,28 +26,19 @@ import io.reactivex.schedulers.Schedulers;
  * Created by andrejsaprykin on 08/10/2018.
  */
 @InjectViewState
-public class RepoPresenter extends MvpPresenter<RepositoryVew> {
+public class RepoPresenter extends MvpPresenter<RepositoryVew> implements SingleObserver<List<RepoItem>>{
     private static final String REPO_PRESENTER_TAG = "Repository presenter";
     private RepoDataModel repoDataModel;
-    private RepositoriesAdapter repoRecyclerAdapter;
     private String searchQuery;
 
     public RepoPresenter() {
         repoDataModel = new RepoDataModel();
-        repoRecyclerAdapter = new RepositoriesAdapter(repoDataModel.getRepositoriesList(), new RepositoriesAdapter.PositionClickListener() {
-            @Override
-            public void onPositionClick(int position) {
-                onItemClick(position);
-            }
-        });
     }
 
-    public RecyclerView.Adapter getRepoRecyclerAdapter() {
-        return repoRecyclerAdapter;
-    }
-
-    private void onItemClick(int position) {
-        getViewState().onRepoItemClick(position);
+    @Override
+    public void attachView(RepositoryVew view) {
+        super.attachView(view);
+        getViewState().setSearchText(searchQuery);
     }
 
     public void searchRepo(final String repoName) {
@@ -62,29 +54,31 @@ public class RepoPresenter extends MvpPresenter<RepositoryVew> {
                             return repoItem.getRepoName().contains(repoName);
                         }
                     }).toList()
-                    .subscribe(new SingleObserver<List<RepoItem>>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onSuccess(List<RepoItem> repoItems) {
-                            repoRecyclerAdapter.updateData(repoItems);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.d(REPO_PRESENTER_TAG, "Error: " + e.getMessage());
-                            repoRecyclerAdapter.updateData(repoDataModel.getRepositoriesList());
-                        }
-                    });
+                    .subscribe(this);
         } else {
-            repoRecyclerAdapter.updateData(repoDataModel.getRepositoriesList());
+            getViewState().updateRepoList(repoDataModel.getRepositoriesList());
         }
     }
 
-    public String getSearchQuery() {
-        return searchQuery;
+
+    public List<RepoItem> getRepositoryList(){
+        return repoDataModel.getRepositoriesList();
     }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
+    public void onSuccess(List<RepoItem> repoItems) {
+        getViewState().updateRepoList(repoItems);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        Log.d(REPO_PRESENTER_TAG, "Error: " + e.getMessage());
+        getViewState().updateRepoList(repoDataModel.getRepositoriesList());
+    }
+
 }

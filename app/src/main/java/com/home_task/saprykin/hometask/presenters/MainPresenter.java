@@ -3,12 +3,12 @@ package com.home_task.saprykin.hometask.presenters;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.home_task.saprykin.hometask.R;
+import com.home_task.saprykin.hometask.presenters.interfaces.ContainerView;
 import com.home_task.saprykin.hometask.views.fragments.ProfileFragment;
 import com.home_task.saprykin.hometask.views.fragments.RepositoriesFragment;
-import com.home_task.saprykin.hometask.presenters.interfaces.FragmentContainerView;
 
 @InjectViewState
-public class MainPresenter extends MvpPresenter<FragmentContainerView> {
+public class MainPresenter extends MvpPresenter<ContainerView> {
     ProfileFragment profileFragment;
     RepositoriesFragment repositoriesFragment;
     private int currentScreenId = -1;
@@ -50,5 +50,13 @@ public class MainPresenter extends MvpPresenter<FragmentContainerView> {
 
     public void setRepositoriesFragment(RepositoriesFragment repositoriesFragment) {
         this.repositoriesFragment = repositoriesFragment;
+    }
+
+    public ProfileFragment getProfileFragment() {
+        return profileFragment;
+    }
+
+    public RepositoriesFragment getRepositoriesFragment() {
+        return repositoriesFragment;
     }
 }
