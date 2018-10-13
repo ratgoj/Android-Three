@@ -12,9 +12,9 @@ import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.presenters.MainPresenter;
 import com.home_task.saprykin.hometask.views.fragments.ProfileFragment;
 import com.home_task.saprykin.hometask.views.fragments.RepositoriesFragment;
-import com.home_task.saprykin.hometask.views.interfaces.FragmentContainerView;
+import com.home_task.saprykin.hometask.presenters.interfaces.ContainerView;
 
-public class MainActivity extends MvpAppCompatActivity implements FragmentContainerView {
+public class MainActivity extends MvpAppCompatActivity implements ContainerView {
     BottomNavigationView bottomNavigationView;
     ProfileFragment profileFragment;
     RepositoriesFragment repositoriesFragment;
@@ -27,11 +27,18 @@ public class MainActivity extends MvpAppCompatActivity implements FragmentContai
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        profileFragment = new ProfileFragment();
-        repositoriesFragment = new RepositoriesFragment();
 
-        presenter.setProfileFragment(profileFragment);
-        presenter.setRepositoriesFragment(repositoriesFragment);
+        if (presenter.getProfileFragment() == null && presenter.getRepositoriesFragment() == null) {
+            profileFragment = new ProfileFragment();
+            repositoriesFragment = new RepositoriesFragment();
+
+            presenter.setProfileFragment(profileFragment);
+            presenter.setRepositoriesFragment(repositoriesFragment);
+        } else {
+            profileFragment = presenter.getProfileFragment();
+            repositoriesFragment = presenter.getRepositoriesFragment();
+        }
+
         presenter.setDefaultScreen();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

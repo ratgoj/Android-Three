@@ -34,6 +34,10 @@ public class RepoDataModel {
         addRepository("First Repository", "07.10.2018");
         addRepository("Second Repository", "10 minutes ago");
         addRepository("Third Repository", "2 hours ago");
+
+        for(int i=1; i<=10; i++){
+            addRepository("Repository number " + i, "05." + i + ".2018");
+        }
     }
 
     public List<RepoItem> getRepositoriesList() {

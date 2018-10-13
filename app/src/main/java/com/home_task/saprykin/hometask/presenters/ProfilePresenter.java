@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.model.ProfileDataModel;
-import com.home_task.saprykin.hometask.views.interfaces.ProfileView;
+import com.home_task.saprykin.hometask.presenters.interfaces.ProfileView;
 
 @InjectViewState
 public class ProfilePresenter extends MvpPresenter<ProfileView> {
