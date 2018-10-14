@@ -40,12 +40,9 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
             super(itemView);
             repoName = itemView.findViewById(R.id.repo_name);
             repoUpdateDate = itemView.findViewById(R.id.repo_update);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (positionListener != null)
-                        positionListener.onPositionClick(getAdapterPosition());
-                }
+            itemView.setOnClickListener(v -> {
+                if (positionListener != null)
+                    positionListener.onPositionClick(getAdapterPosition());
             });
         }
     }

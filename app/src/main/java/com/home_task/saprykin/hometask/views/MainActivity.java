@@ -3,6 +3,7 @@ package com.home_task.saprykin.hometask.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 
@@ -15,6 +16,8 @@ import com.home_task.saprykin.hometask.views.fragments.RepositoriesFragment;
 import com.home_task.saprykin.hometask.presenters.interfaces.ContainerView;
 
 public class MainActivity extends MvpAppCompatActivity implements ContainerView {
+    private static final String SP_SCREEN_ID_KEY = "com.home_task.saprykin.hometask.screen_id_key";
+
     BottomNavigationView bottomNavigationView;
     ProfileFragment profileFragment;
     RepositoriesFragment repositoriesFragment;
@@ -41,12 +44,10 @@ public class MainActivity extends MvpAppCompatActivity implements ContainerView 
 
         presenter.setDefaultScreen();
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                presenter.setCurrentFragment(item.getItemId());
-                return true;
-            }
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            saveCurrentScreen(item.getItemId());
+            presenter.setCurrentFragment(item.getItemId());
+            return true;
         });
     }
 
@@ -57,6 +58,28 @@ public class MainActivity extends MvpAppCompatActivity implements ContainerView 
 
     @Override
     public void setDefaultFragment() {
-        getSupportFragmentManager().beginTransaction().add(R.id.container, profileFragment).commit();
+        int savedScreen = getPreferences(MODE_PRIVATE).getInt(SP_SCREEN_ID_KEY, -1);
+        presenter.setCurrentFragment(savedScreen);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showError(String errorText) {
+        Snackbar sb = Snackbar.make(bottomNavigationView, errorText, Snackbar.LENGTH_SHORT);
+        sb.getView().setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        sb.show();
+    }
+
+    private void saveCurrentScreen(int screenId) {
+        getPreferences(MODE_PRIVATE).edit().putInt(SP_SCREEN_ID_KEY, screenId).apply();
     }
 }

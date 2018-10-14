@@ -20,56 +20,49 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategy;
 import com.home_task.saprykin.hometask.R;
+import com.home_task.saprykin.hometask.model.RepoDataModel;
 import com.home_task.saprykin.hometask.model.RepoItem;
 import com.home_task.saprykin.hometask.presenters.RepoPresenter;
 import com.home_task.saprykin.hometask.presenters.interfaces.RepositoryVew;
 import com.home_task.saprykin.hometask.views.adapters.RepositoriesAdapter;
+import com.home_task.saprykin.hometask.views.base.BaseFragment;
 
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RepositoriesFragment extends MvpAppCompatFragment implements RepositoryVew {
+public class RepositoriesFragment extends BaseFragment implements RepositoryVew {
     private static final String REPO_TAG = "Repository";
 
-    private View repoView;
+
     private EditText searchRepo;
     private RecyclerView repoRecyclerView;
     private RecyclerView.LayoutManager repoLayoutManager;
     private RepositoriesAdapter repoRecyclerAdapter;
 
-    @InjectPresenter
+    @InjectPresenter()
     RepoPresenter presenter;
 
+    @ProvidePresenter
+    RepoPresenter providePresenter() {
+        return new RepoPresenter(new RepoDataModel());
+    }
+
     public RepositoriesFragment() {
-        // Required empty public constructo
+        layout = R.layout.fragment_repositories;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        repoView = inflater.inflate(R.layout.fragment_repositories, container, false);
-
-        initView(repoView);
-
-        return repoView;
-    }
-
-    private void initView(View repoView) {
+    protected void initView() {
         repoLayoutManager = new LinearLayoutManager(getActivity());
-        repoRecyclerView = repoView.findViewById(R.id.repo_list);
+        repoRecyclerView = currentFragmentView.findViewById(R.id.repo_list);
         repoRecyclerView.setLayoutManager(repoLayoutManager);
-        repoRecyclerAdapter = new RepositoriesAdapter(presenter.getRepositoryList(), new RepositoriesAdapter.PositionClickListener() {
-            @Override
-            public void onPositionClick(int position) {
-                onRepoItemClick(position);
-            }
-        });
+        repoRecyclerAdapter = new RepositoriesAdapter(presenter.getRepositoryList(), position -> onRepoItemClick(position));
 
         repoRecyclerView.setAdapter(repoRecyclerAdapter);
 
-        searchRepo = repoView.findViewById(R.id.repo_search);
+        searchRepo = currentFragmentView.findViewById(R.id.repo_search);
         TextWatcher searchWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
