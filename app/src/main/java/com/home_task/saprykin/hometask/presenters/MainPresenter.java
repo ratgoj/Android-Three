@@ -1,9 +1,12 @@
 package com.home_task.saprykin.hometask.presenters;
 
+import android.content.Context;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.presenters.interfaces.ContainerView;
+import com.home_task.saprykin.hometask.views.MainActivity;
 import com.home_task.saprykin.hometask.views.fragments.ProfileFragment;
 import com.home_task.saprykin.hometask.views.fragments.RepositoriesFragment;
 
@@ -12,9 +15,6 @@ public class MainPresenter extends MvpPresenter<ContainerView> {
     ProfileFragment profileFragment;
     RepositoriesFragment repositoriesFragment;
     private int currentScreenId = -1;
-
-    public MainPresenter() {
-    }
 
     public void setCurrentFragment(int screenId) {
         switch (screenId) {
@@ -33,15 +33,15 @@ public class MainPresenter extends MvpPresenter<ContainerView> {
         }
     }
 
-    private void setCurrentScreenId(int currentScreenId) {
+    public void setCurrentScreenId(int currentScreenId) {
         this.currentScreenId = currentScreenId;
     }
 
     public void setDefaultScreen() {
-        if (currentScreenId == -1)
-            getViewState().setDefaultFragment();
-        else
+        if(currentScreenId != -1)
             setCurrentFragment(currentScreenId);
+        else
+            getViewState().setDefaultFragment();
     }
 
     public void setProfileFragment(ProfileFragment profileFragment) {

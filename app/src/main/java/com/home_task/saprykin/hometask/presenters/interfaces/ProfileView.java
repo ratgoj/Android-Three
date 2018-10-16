@@ -1,8 +1,8 @@
 package com.home_task.saprykin.hometask.presenters.interfaces;
 
-import com.arellomobile.mvp.MvpView;
+import com.home_task.saprykin.hometask.presenters.interfaces.base.BaseView;
 
-public interface ProfileView extends MvpView {
+public interface ProfileView extends BaseView {
     void setText(int viewId, String currentText);
     void setImage();
 }

@@ -15,38 +15,35 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.presenters.ProfilePresenter;
 import com.home_task.saprykin.hometask.presenters.interfaces.ProfileView;
+import com.home_task.saprykin.hometask.views.base.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends MvpAppCompatFragment implements ProfileView {
+public class ProfileFragment extends BaseFragment implements ProfileView {
     private static final String PROFILE_TAG = "Profile Info";
 
-    View profileView;
     ImageView profileImage;
 
     @InjectPresenter
     ProfilePresenter profilePresenter;
 
     public ProfileFragment() {
-        // Required empty public constructor
+        layout = R.layout.fragment_profile;
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        profileView = inflater.inflate(R.layout.fragment_profile, container, false);
-        profileImage = profileView.findViewById(R.id.profile_image);
+    protected void initView() {
+        profileImage = currentFragmentView.findViewById(R.id.profile_image);
         profilePresenter.setProfileInfo();
         profilePresenter.setProfileImage();
-        return profileView;
     }
 
     @Override
     public void setText(int viewId, String currentText) {
-        if (profileView.findViewById(viewId) instanceof TextView)
-            ((TextView) profileView.findViewById(viewId)).setText(currentText);
+        if (currentFragmentView.findViewById(viewId) instanceof TextView)
+            ((TextView) currentFragmentView.findViewById(viewId)).setText(currentText);
     }
 
     @Override

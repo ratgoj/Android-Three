@@ -1,18 +1,19 @@
 package com.home_task.saprykin.hometask.presenters.interfaces;
 
-import com.arellomobile.mvp.MvpView;
-import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
+
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.home_task.saprykin.hometask.model.RepoItem;
+import com.home_task.saprykin.hometask.presenters.interfaces.base.BaseView;
 
 import java.util.List;
 
 /**
  * Created by andrejsaprykin on 08/10/2018.
  */
-public interface RepositoryVew extends MvpView {
+public interface RepositoryVew extends BaseView {
     void updateRepoList(List<RepoItem> newRepoList);
 
-    @StateStrategyType(SkipStrategy.class)
+    @StateStrategyType(AddToEndSingleStrategy.class)
     void setSearchText(String text);
 }
