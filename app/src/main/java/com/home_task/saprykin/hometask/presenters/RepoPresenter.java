@@ -34,6 +34,7 @@ public class RepoPresenter extends BasePresenterSingle<RepositoryVew, List<RepoI
     private String searchQuery;
 
     public RepoPresenter(RepoDataModel repoModel) {
+        super();
         repoDataModel = repoModel;
     }
 
@@ -49,7 +50,7 @@ public class RepoPresenter extends BasePresenterSingle<RepositoryVew, List<RepoI
             Flowable.fromIterable(repoDataModel.getRepositoriesList())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.newThread())
-                    .filter(repoItem -> {return repoItem.getRepoName().contains(repoName);})
+                    .filter(repoItem -> {return repoItem.getRepoName().toLowerCase().contains(repoName.toLowerCase());})
                     .toList()
                     .subscribe(this);
         } else {

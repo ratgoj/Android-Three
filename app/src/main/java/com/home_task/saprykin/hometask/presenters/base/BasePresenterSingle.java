@@ -12,6 +12,8 @@ import io.reactivex.disposables.Disposable;
 
 public class BasePresenterSingle<View extends BaseView, T> extends MvpPresenter<View> implements SingleObserver<T> {
 
+    public BasePresenterSingle() {
+    }
 
     @Override
     public void onSubscribe(Disposable d) {

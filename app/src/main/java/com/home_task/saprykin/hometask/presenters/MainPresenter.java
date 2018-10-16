@@ -16,10 +16,6 @@ public class MainPresenter extends MvpPresenter<ContainerView> {
     RepositoriesFragment repositoriesFragment;
     private int currentScreenId = -1;
 
-    public MainPresenter() {
-
-    }
-
     public void setCurrentFragment(int screenId) {
         switch (screenId) {
             case R.id.item_profile:

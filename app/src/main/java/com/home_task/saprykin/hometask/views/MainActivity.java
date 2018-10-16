@@ -17,6 +17,7 @@ import com.home_task.saprykin.hometask.presenters.interfaces.ContainerView;
 
 public class MainActivity extends MvpAppCompatActivity implements ContainerView {
     private static final String SP_SCREEN_ID_KEY = "com.home_task.saprykin.hometask.screen_id_key";
+    private static final int DEFAULT_START_SCREEN = -1;
 
     BottomNavigationView bottomNavigationView;
     ProfileFragment profileFragment;
@@ -58,8 +59,8 @@ public class MainActivity extends MvpAppCompatActivity implements ContainerView 
 
     @Override
     public void setDefaultFragment() {
-        int savedScreen = getPreferences(MODE_PRIVATE).getInt(SP_SCREEN_ID_KEY, -1);
-        presenter.setCurrentFragment(savedScreen);
+        //int savedScreen = getPreferences(MODE_PRIVATE).getInt(SP_SCREEN_ID_KEY, -1);
+        presenter.setCurrentFragment(DEFAULT_START_SCREEN);
     }
 
     @Override

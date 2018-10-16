@@ -11,9 +11,15 @@ import org.reactivestreams.Subscription;
  */
 
 public class BasePresenter <View extends BaseView, T> extends MvpPresenter<View> implements Subscriber<T> {
+    private long maxEmittedItems;
+
+    public BasePresenter(long maxEmittedItems) {
+        this.maxEmittedItems = maxEmittedItems;
+    }
+
     @Override
     public void onSubscribe(Subscription s) {
-
+        s.request(maxEmittedItems);
     }
 
     @Override
