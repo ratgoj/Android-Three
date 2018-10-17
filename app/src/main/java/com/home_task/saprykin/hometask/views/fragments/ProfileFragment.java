@@ -1,17 +1,12 @@
 package com.home_task.saprykin.hometask.views.fragments;
 
-
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.bumptech.glide.Glide;
 import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.presenters.ProfilePresenter;
@@ -30,8 +25,12 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     @InjectPresenter
     ProfilePresenter profilePresenter;
 
+    @ProvidePresenter
+    ProfilePresenter getProfilePresenter() {
+        return new ProfilePresenter(1000l);
+    }
+
     public ProfileFragment() {
-        super();
         layout = R.layout.fragment_profile;
     }
 

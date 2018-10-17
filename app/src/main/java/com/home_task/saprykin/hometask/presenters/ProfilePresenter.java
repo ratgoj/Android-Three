@@ -39,7 +39,7 @@ public class ProfilePresenter extends BasePresenter<ProfileView, UserGitHub> {
     @Override
     public void onNext(UserGitHub userGitHub) {
         super.onNext(userGitHub);
-        getViewState().setText(R.id.profile_date_text, userGitHub.getUserCreationDate());
+        getViewState().setText(R.id.profile_date_text, userGitHub.getUserCreationDate().substring(0,10));
         getViewState().setText(R.id.profile_nick_name_text, "@" + userGitHub.getUserLogin());
         String userName = userGitHub.getUserName();
         if (userName != null)
