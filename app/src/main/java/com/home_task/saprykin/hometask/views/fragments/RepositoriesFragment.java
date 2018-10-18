@@ -1,27 +1,19 @@
 package com.home_task.saprykin.hometask.views.fragments;
 
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
-import com.arellomobile.mvp.MvpDelegate;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
-import com.arellomobile.mvp.viewstate.strategy.StateStrategy;
 import com.home_task.saprykin.hometask.R;
-import com.home_task.saprykin.hometask.model.RepoDataModel;
-import com.home_task.saprykin.hometask.model.RepoItem;
+import com.home_task.saprykin.hometask.model.entities.models.RepoModel;
 import com.home_task.saprykin.hometask.presenters.RepoPresenter;
 import com.home_task.saprykin.hometask.presenters.interfaces.RepositoryVew;
 import com.home_task.saprykin.hometask.views.adapters.RepositoriesAdapter;
@@ -46,7 +38,7 @@ public class RepositoriesFragment extends BaseFragment implements RepositoryVew 
 
     @ProvidePresenter
     RepoPresenter providePresenter() {
-        return new RepoPresenter(new RepoDataModel());
+        return new RepoPresenter();
     }
 
     public RepositoriesFragment() {
@@ -87,12 +79,24 @@ public class RepositoriesFragment extends BaseFragment implements RepositoryVew 
     }
 
     @Override
-    public void updateRepoList(List<RepoItem> newRepoList) {
+    public void updateRepoList(List<RepoModel> newRepoList) {
         repoRecyclerAdapter.updateData(newRepoList);
     }
 
     @Override
     public void setSearchText(String text) {
         searchRepo.setText(text);
+    }
+
+    @Override
+    public void showLoading() {
+        super.showLoading();
+        currentFragmentView.findViewById(R.id.repo_progress_view).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        currentFragmentView.findViewById(R.id.repo_progress_view).setVisibility(View.GONE);
     }
 }

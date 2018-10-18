@@ -19,6 +19,6 @@ public interface NetworkApiRequest {
     @GET("/users/{user}")
     Observable<UserGitHub> getUser(@Path("user") String user);
 
-    @GET("/repositories")
-    Flowable<List<RepoModel>> getRepos();
+    @GET("/users/{user}/repos")
+    Flowable<List<RepoModel>> getRepos(@Path("user") String user);
 }

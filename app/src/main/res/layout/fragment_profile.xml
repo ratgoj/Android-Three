@@ -6,7 +6,7 @@
     tools:context=".views.fragments.ProfileFragment">
 
     <ProgressBar
-        android:id="@+id/progressView"
+        android:id="@+id/profile_progress_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

@@ -33,11 +33,12 @@ public class BasePresenter <View extends BaseView, T> extends MvpPresenter<View>
 
     @Override
     public void onError(Throwable t) {
+        getViewState().hideLoading();
         getViewState().showError(t.getMessage());
     }
 
     @Override
     public void onComplete() {
-
+        getViewState().hideLoading();
     }
 }

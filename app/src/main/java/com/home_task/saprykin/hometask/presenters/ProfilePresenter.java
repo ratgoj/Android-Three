@@ -1,22 +1,16 @@
 package com.home_task.saprykin.hometask.presenters;
 
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 import com.home_task.saprykin.hometask.R;
-import com.home_task.saprykin.hometask.model.ProfileDataModel;
 import com.home_task.saprykin.hometask.model.entities.models.UserGitHub;
 import com.home_task.saprykin.hometask.model.network.NetworkHelper;
 import com.home_task.saprykin.hometask.presenters.base.BasePresenter;
 import com.home_task.saprykin.hometask.presenters.interfaces.ProfileView;
 
-import org.reactivestreams.Subscription;
-
-import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 @InjectViewState
 public class ProfilePresenter extends BasePresenter<ProfileView, UserGitHub> {
-    ProfileDataModel profileDataModel;
 
     public ProfilePresenter(long maxEmittedItems) {
         super(maxEmittedItems);

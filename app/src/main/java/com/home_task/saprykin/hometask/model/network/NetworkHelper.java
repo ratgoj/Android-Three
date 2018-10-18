@@ -36,8 +36,8 @@ public class NetworkHelper {
                 .subscribeOn(Schedulers.io());
     }
 
-    public Flowable<List<RepoModel>> getReps(){
-        return networkApiRequest.getRepos()
+    public Flowable<List<RepoModel>> getRepos(String userLogin){
+        return networkApiRequest.getRepos(userLogin)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.home_task.saprykin.hometask.R;
-import com.home_task.saprykin.hometask.model.RepoItem;
+import com.home_task.saprykin.hometask.model.entities.models.RepoModel;
 
 import java.util.List;
 
@@ -23,11 +23,11 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
         void onPositionClick(int position);
     }
 
-    private List<RepoItem> repoList;
+    private List<RepoModel> repoList;
     private LayoutInflater repoInflater;
     private static PositionClickListener positionListener;
 
-    public RepositoriesAdapter(List<RepoItem> repoList, PositionClickListener positionClickListener) {
+    public RepositoriesAdapter(List<RepoModel> repoList, PositionClickListener positionClickListener) {
         this.repoList = repoList;
         this.positionListener = positionClickListener;
     }
@@ -57,17 +57,20 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RepositoriesAdapter.RepoViewHolder holder, int position) {
-        RepoItem curentItem = repoList.get(position);
+        RepoModel curentItem = repoList.get(position);
         holder.repoName.setText(curentItem.getRepoName());
-        holder.repoUpdateDate.setText(curentItem.getRepoUpdateDate());
+        holder.repoUpdateDate.setText(curentItem.getUrlPath());
     }
 
     @Override
     public int getItemCount() {
-        return repoList.size();
+        if (repoList != null)
+            return repoList.size();
+        else
+            return 0;
     }
 
-    public void updateData(List<RepoItem> newRepoList) {
+    public void updateData(List<RepoModel> newRepoList) {
         this.repoList = newRepoList;
         notifyDataSetChanged();
     }

@@ -12,13 +12,13 @@
     <string name="profile_full_name">Saprykin Andrey</string>
 
     <string name="repositories_title_text">Yours repositories</string>
-    <string name="repositories_update_label">last update: </string>
+    <string name="repositories_url_label">Url: </string>
 
     <string name="stub_repo_name_1">Repo name 1</string>
     <string name="stub_repo_name_2">Repo name 2</string>
     <string name="stub_repo_name_3">Repo name 3</string>
 
-    <string name="stub_repo_update_1">27.05.2018</string>
-    <string name="stub_repo_update_2">10 minutes ago  </string>
-    <string name="stub_repo_update_3">2 hours ago</string>
+    <string name="stub_repo_update_1">https://some_path/1</string>
+    <string name="stub_repo_update_2">https://some_path/2</string>
+    <string name="stub_repo_update_3">https://some_path/3</string>
 </resources>

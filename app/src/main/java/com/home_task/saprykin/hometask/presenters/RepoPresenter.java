@@ -1,41 +1,31 @@
 package com.home_task.saprykin.hometask.presenters;
 
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-
 import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
-import com.arellomobile.mvp.viewstate.MvpViewState;
-import com.home_task.saprykin.hometask.model.RepoDataModel;
-import com.home_task.saprykin.hometask.model.RepoItem;
+import com.home_task.saprykin.hometask.model.entities.models.RepoModel;
+import com.home_task.saprykin.hometask.model.network.NetworkHelper;
 import com.home_task.saprykin.hometask.presenters.base.BasePresenterSingle;
 import com.home_task.saprykin.hometask.presenters.interfaces.RepositoryVew;
-import com.home_task.saprykin.hometask.views.adapters.RepositoriesAdapter;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by andrejsaprykin on 08/10/2018.
  */
 @InjectViewState
-public class RepoPresenter extends BasePresenterSingle<RepositoryVew, List<RepoItem>> {
+public class RepoPresenter extends BasePresenterSingle<RepositoryVew, List<RepoModel>> {
     private static final String REPO_PRESENTER_TAG = "Repository presenter";
-    private RepoDataModel repoDataModel;
     private String searchQuery;
+    private List<RepoModel> repoList;
 
-    public RepoPresenter(RepoDataModel repoModel) {
+    public RepoPresenter() {
         super();
-        repoDataModel = repoModel;
+        loadData();
     }
 
     @Override
@@ -47,31 +37,54 @@ public class RepoPresenter extends BasePresenterSingle<RepositoryVew, List<RepoI
     public void searchRepo(final String repoName) {
         if (repoName != null && !repoName.isEmpty()) {
             searchQuery = repoName;
-            Flowable.fromIterable(repoDataModel.getRepositoriesList())
+            Flowable.fromIterable(repoList)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.newThread())
-                    .filter(repoItem -> {return repoItem.getRepoName().toLowerCase().contains(repoName.toLowerCase());})
+                    .filter(repoModel -> {
+                        return repoModel.getRepoName().toLowerCase().contains(repoName.toLowerCase());
+                    })
                     .toList()
                     .subscribe(this);
         } else {
-            getViewState().updateRepoList(repoDataModel.getRepositoriesList());
+            getViewState().updateRepoList(repoList);
         }
     }
 
 
-    public List<RepoItem> getRepositoryList(){
-        return repoDataModel.getRepositoriesList();
+    public List<RepoModel> getRepositoryList() {
+        return repoList;
     }
 
     @Override
     public void onError(Throwable e) {
         super.onError(e);
-        getViewState().updateRepoList(repoDataModel.getRepositoriesList());
+        getViewState().updateRepoList(repoList);
     }
 
     @Override
-    public void onSuccess(List<RepoItem> repoItems) {
+    public void onSuccess(List<RepoModel> repoItems) {
         super.onSuccess(repoItems);
+        getViewState().hideLoading();
         getViewState().updateRepoList(repoItems);
+    }
+
+    private void loadData() {
+        getViewState().showLoading();
+        NetworkHelper.getInstance().getRepos("ratgoj").toList().subscribe(new SingleObserver<List<List<RepoModel>>>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(List<List<RepoModel>> lists) {
+                RepoPresenter.this.onSuccess(lists.get(0));
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                RepoPresenter.this.onError(e);
+            }
+        });
     }
 }

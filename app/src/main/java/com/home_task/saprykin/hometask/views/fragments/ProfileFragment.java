@@ -58,13 +58,13 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     public void showLoading() {
         super.showLoading();
         currentFragmentView.findViewById(R.id.profile_info_layout).setVisibility(View.GONE);
-        currentFragmentView.findViewById(R.id.progressView).setVisibility(View.VISIBLE);
+        currentFragmentView.findViewById(R.id.profile_progress_view).setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
         super.hideLoading();
         currentFragmentView.findViewById(R.id.profile_info_layout).setVisibility(View.VISIBLE);
-        currentFragmentView.findViewById(R.id.progressView).setVisibility(View.GONE);
+        currentFragmentView.findViewById(R.id.profile_progress_view).setVisibility(View.GONE);
     }
 }
