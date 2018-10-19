@@ -22,11 +22,12 @@ public class BasePresenterSingle<View extends BaseView, T> extends MvpPresenter<
 
     @Override
     public void onSuccess(T t) {
-
+        getViewState().hideLoading();
     }
 
     @Override
     public void onError(Throwable e) {
+        getViewState().hideLoading();
         getViewState().showError(e.getMessage());
     }
 }
