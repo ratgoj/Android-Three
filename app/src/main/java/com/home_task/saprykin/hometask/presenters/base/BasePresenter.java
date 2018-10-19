@@ -3,9 +3,6 @@ package com.home_task.saprykin.hometask.presenters.base;
 import com.arellomobile.mvp.MvpPresenter;
 import com.home_task.saprykin.hometask.presenters.interfaces.base.BaseView;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -13,11 +10,10 @@ import io.reactivex.disposables.Disposable;
  * Created by andrejsaprykin on 14/10/2018.
  */
 
-public class BasePresenter <View extends BaseView, T> extends MvpPresenter<View> implements Observer<T> {
-    private long maxEmittedItems;
+public class BasePresenter<View extends BaseView, T> extends MvpPresenter<View> implements Observer<T> {
 
-    public BasePresenter(long maxEmittedItems) {
-        this.maxEmittedItems = maxEmittedItems;
+    public BasePresenter() {
+        super();
     }
 
 

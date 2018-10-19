@@ -25,6 +25,11 @@ public class RepoPresenter extends BasePresenterSingle<RepositoryVew, List<RepoM
 
     public RepoPresenter() {
         super();
+    }
+
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
         loadData();
     }
 

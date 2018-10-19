@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.bumptech.glide.Glide;
 import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.presenters.ProfilePresenter;
@@ -25,11 +24,6 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     @InjectPresenter
     ProfilePresenter profilePresenter;
 
-    @ProvidePresenter
-    ProfilePresenter getProfilePresenter() {
-        return new ProfilePresenter(1000l);
-    }
-
     public ProfileFragment() {
         layout = R.layout.fragment_profile;
     }
@@ -41,7 +35,22 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
         profilePresenter.setProfileInfo();
     }
 
+
     @Override
+    public void setProfileFullName(String name) {
+        setText(R.id.profile_full_name_text, name);
+    }
+
+    @Override
+    public void setProfileNick(String nick) {
+        setText(R.id.profile_nick_name_text, "@" + nick);
+    }
+
+    @Override
+    public void setProfileDateCreation(String dateCreation) {
+        setText(R.id.profile_date_text, dateCreation);
+    }
+
     public void setText(int viewId, String currentText) {
         if (currentFragmentView.findViewById(viewId) instanceof TextView)
             ((TextView) currentFragmentView.findViewById(viewId)).setText(currentText);
