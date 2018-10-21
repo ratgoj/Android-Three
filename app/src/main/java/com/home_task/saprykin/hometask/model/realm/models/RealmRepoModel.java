@@ -5,6 +5,7 @@ import io.realm.RealmObject;
 public class RealmRepoModel extends RealmObject {
     private String repoFullName;
     private String repoUrlPath;
+    private String repoUserLogin;
 
     public String getRepoFullName() {
         return repoFullName;
@@ -20,5 +21,13 @@ public class RealmRepoModel extends RealmObject {
 
     public void setRepoUrlPath(String repoUrlPath) {
         this.repoUrlPath = repoUrlPath;
+    }
+
+    public String getRepoUserLogin() {
+        return repoUserLogin;
+    }
+
+    public void setRepoUserLogin(String repoUserLogin) {
+        this.repoUserLogin = repoUserLogin;
     }
 }

@@ -3,10 +3,19 @@ package com.home_task.saprykin.hometask.model.realm.models;
 import io.realm.RealmObject;
 
 public class RealmProfileModel extends RealmObject {
+    private int userId;
     private String userLogin;
     private String userName;
     private String userAvatarUrl;
     private String userCreationDate;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public String getUserLogin() {
         return userLogin;

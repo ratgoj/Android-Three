@@ -21,11 +21,37 @@
         android:layout_height="wrap_content"
         android:text="@string/profile_title_text" />
 
+    <LinearLayout
+        android:id="@+id/profile_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/search_side_margin"
+        android:layout_marginLeft="@dimen/search_side_margin"
+        android:layout_below="@id/profile_title"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/profile_search_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableTint="@color/colorPrimary"
+            android:hint="@string/find_profile_hint"
+            android:layout_weight="2"/>
+        <ImageButton
+            android:id="@+id/profile_search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search_24dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:tint="@color/colorWhite"
+            />
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/profile_image"
         android:layout_width="156dp"
         android:layout_height="156dp"
-        android:layout_below="@id/profile_title"
+        android:layout_below="@id/profile_search_layout"
         android:layout_margin="8dp"
         android:contentDescription="@string/profile_title_text"
         android:src="@mipmap/ic_profile_stub_round" />
@@ -34,7 +60,7 @@
         android:id="@+id/profile_date_info_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/profile_title"
+        android:layout_below="@id/profile_search_layout"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"

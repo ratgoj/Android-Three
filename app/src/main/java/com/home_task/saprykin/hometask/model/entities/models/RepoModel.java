@@ -19,6 +19,11 @@ public class RepoModel {
     @Expose
     private String urlPath;
 
+    public RepoModel(String repoName, String urlPath) {
+        this.repoName = repoName;
+        this.urlPath = urlPath;
+    }
+
     @Nullable
     public String getRepoName() {
         return repoName;
@@ -28,4 +33,6 @@ public class RepoModel {
     public String getUrlPath() {
         return urlPath;
     }
+
+
 }

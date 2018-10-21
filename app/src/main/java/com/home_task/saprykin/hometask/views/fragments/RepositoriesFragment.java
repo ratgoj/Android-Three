@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.home_task.saprykin.hometask.AppContext;
 import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.model.entities.models.RepoModel;
 import com.home_task.saprykin.hometask.presenters.RepoPresenter;
@@ -98,5 +99,14 @@ public class RepositoriesFragment extends BaseFragment implements RepositoryVew 
     public void hideLoading() {
         super.hideLoading();
         currentFragmentView.findViewById(R.id.repo_progress_view).setVisibility(View.GONE);
+    }
+
+    private String getSavedUserLogin() {
+        return  ((AppContext)getActivity().getApplicationContext()).getSavedUserLogin(getActivity().getLocalClassName());
+    }
+
+    @Override
+    public void loadUserRepo() {
+        presenter.loadDbData(getSavedUserLogin());
     }
 }

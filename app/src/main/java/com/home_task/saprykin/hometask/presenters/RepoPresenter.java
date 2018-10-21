@@ -1,8 +1,11 @@
 package com.home_task.saprykin.hometask.presenters;
 
+import android.util.Log;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.home_task.saprykin.hometask.model.entities.models.RepoModel;
 import com.home_task.saprykin.hometask.model.network.NetworkHelper;
+import com.home_task.saprykin.hometask.model.realm.RealmDbHelper;
 import com.home_task.saprykin.hometask.presenters.base.BasePresenterSingle;
 import com.home_task.saprykin.hometask.presenters.interfaces.RepositoryVew;
 
@@ -23,6 +26,7 @@ public class RepoPresenter extends BasePresenterSingle<RepositoryVew, List<RepoM
     private String searchQuery;
     private List<RepoModel> repoList;
 
+
     public RepoPresenter() {
         super();
     }
@@ -30,12 +34,12 @@ public class RepoPresenter extends BasePresenterSingle<RepositoryVew, List<RepoM
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        loadData();
     }
 
     @Override
     public void attachView(RepositoryVew view) {
         super.attachView(view);
+        getViewState().loadUserRepo();
         getViewState().setSearchText(searchQuery);
     }
 
@@ -73,9 +77,10 @@ public class RepoPresenter extends BasePresenterSingle<RepositoryVew, List<RepoM
         getViewState().updateRepoList(repoItems);
     }
 
-    private void loadData() {
+    private void loadData(String userLogin) {
         getViewState().showLoading();
-        NetworkHelper.getInstance().getRepos("ratgoj").toList().subscribe(new SingleObserver<List<List<RepoModel>>>() {
+        RealmDbHelper.getInstance().loadUserRepos(userLogin);
+        NetworkHelper.getInstance().getRepos(userLogin).toList().subscribe(new SingleObserver<List<List<RepoModel>>>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -83,7 +88,7 @@ public class RepoPresenter extends BasePresenterSingle<RepositoryVew, List<RepoM
 
             @Override
             public void onSuccess(List<List<RepoModel>> lists) {
-                RepoPresenter.this.onSuccess(lists.get(0));
+               RepoPresenter.this.onSuccess(lists.get(0));
             }
 
             @Override
@@ -91,5 +96,18 @@ public class RepoPresenter extends BasePresenterSingle<RepositoryVew, List<RepoM
                 RepoPresenter.this.onError(e);
             }
         });
+    }
+
+    public void loadDbData(String userLogin) {
+        String login = userLogin;
+        if (login == null || login.isEmpty())
+            login = "ratgoj";
+        Log.d(REPO_PRESENTER_TAG, "LoadDBData login: " + login);
+        List<RepoModel> dbRepoResult = RealmDbHelper.getInstance().findUserRepos(login);
+        if (dbRepoResult != null) {
+            RepoPresenter.this.onSuccess(dbRepoResult);
+        } else {
+            loadData(login);
+        }
     }
 }
