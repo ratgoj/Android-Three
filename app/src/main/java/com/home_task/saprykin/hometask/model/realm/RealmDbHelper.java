@@ -103,33 +103,19 @@ public class RealmDbHelper {
         };
     }
 
-    public void loadUserRepos(String userLogin) {
-        NetworkHelper.getInstance().getRepos(userLogin).toList().subscribe(new SingleObserver<List<List<RepoModel>>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
+    public void loadUserRepos(String userLogin, List<RepoModel> repos) {
+        if(repos != null && !repos.isEmpty()){
+            Realm realm = Realm.getDefaultInstance();
+            for (RepoModel model : repos) {
+                realm.beginTransaction();
+                RealmRepoModel realmRepoModel = realm.createObject(RealmRepoModel.class);
+                realmRepoModel.setRepoFullName(model.getRepoName());
+                realmRepoModel.setRepoUrlPath(model.getUrlPath());
+                realmRepoModel.setRepoUserLogin(userLogin);
+                realm.commitTransaction();
             }
-
-            @Override
-            public void onSuccess(List<List<RepoModel>> lists) {
-                List<RepoModel> resultList = lists.get(0);
-                Realm realm = Realm.getDefaultInstance();
-                for (RepoModel model : resultList) {
-                    realm.beginTransaction();
-                    RealmRepoModel realmRepoModel = realm.createObject(RealmRepoModel.class);
-                    realmRepoModel.setRepoFullName(model.getRepoName());
-                    realmRepoModel.setRepoUrlPath(model.getUrlPath());
-                    realmRepoModel.setRepoUserLogin(userLogin);
-                    realm.commitTransaction();
-                }
-                Realm.getDefaultInstance().close();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Realm.getDefaultInstance().cancelTransaction();
-            }
-        });
+            realm.close();
+        }
     }
 
     public List<RepoModel> findUserRepos(String userLogin) {
