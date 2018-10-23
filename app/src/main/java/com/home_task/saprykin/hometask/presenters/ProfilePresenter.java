@@ -2,8 +2,8 @@ package com.home_task.saprykin.hometask.presenters;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.home_task.saprykin.hometask.model.entities.models.UserGitHub;
-import com.home_task.saprykin.hometask.model.network.NetworkHelper;
-import com.home_task.saprykin.hometask.model.realm.RealmDbHelper;
+import com.home_task.saprykin.hometask.model.realm.profile.RealmUserProfileWorker;
+import com.home_task.saprykin.hometask.model.realm.profile.UsersProfilesData;
 import com.home_task.saprykin.hometask.presenters.base.BasePresenter;
 import com.home_task.saprykin.hometask.presenters.interfaces.ProfileView;
 
@@ -12,9 +12,16 @@ import io.reactivex.disposables.Disposable;
 @InjectViewState
 public class ProfilePresenter extends BasePresenter<ProfileView, UserGitHub> {
     private String currentUserLogin = "ratgoj";
+    private UsersProfilesData userProfileData;
 
     public ProfilePresenter() {
         super();
+        userProfileData = new RealmUserProfileWorker();
+    }
+
+    @Override
+    public void attachView(ProfileView view) {
+        super.attachView(view);
     }
 
     public void setProfileInfo() {
@@ -28,11 +35,11 @@ public class ProfilePresenter extends BasePresenter<ProfileView, UserGitHub> {
 
     private void loadProfileFromNet(String userLogin) {
         getViewState().showLoading();
-        RealmDbHelper.getInstance().loadUserData(userLogin, this);
+        userProfileData.inputUserData(userLogin, this);
     }
 
     private void loadProfileFromDb(String userLogin) {
-        RealmDbHelper.getInstance().getUser(userLogin).subscribe(this);
+        userProfileData.getUser(userLogin).subscribe(this);
     }
 
     @Override

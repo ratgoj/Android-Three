@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.fragments.ProfileFragment">
+    tools:activity=".views.fragments.ProfileFragment">
 
     <ProgressBar
         android:id="@+id/profile_progress_view"

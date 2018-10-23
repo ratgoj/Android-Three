@@ -14,6 +14,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.home_task.saprykin.hometask.AppContext;
 import com.home_task.saprykin.hometask.R;
+import com.home_task.saprykin.hometask.model.InternalSettings;
 import com.home_task.saprykin.hometask.model.entities.models.RepoModel;
 import com.home_task.saprykin.hometask.presenters.RepoPresenter;
 import com.home_task.saprykin.hometask.presenters.interfaces.RepositoryVew;
@@ -102,7 +103,7 @@ public class RepositoriesFragment extends BaseFragment implements RepositoryVew 
     }
 
     private String getSavedUserLogin() {
-        return  ((AppContext)getActivity().getApplicationContext()).getSavedUserLogin(getActivity().getLocalClassName());
+        return InternalSettings.getInstance(getActivity()).getSavedUserLogin();
     }
 
     @Override
