@@ -1,15 +1,10 @@
 package com.home_task.saprykin.hometask.model.realm;
 
-import android.util.Log;
-
 import com.home_task.saprykin.hometask.model.entities.models.RepoModel;
 import com.home_task.saprykin.hometask.model.entities.models.UserGitHub;
 import com.home_task.saprykin.hometask.model.network.NetworkHelper;
 import com.home_task.saprykin.hometask.model.realm.models.RealmProfileModel;
 import com.home_task.saprykin.hometask.model.realm.models.RealmRepoModel;
-
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +13,6 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.internal.operators.single.SingleObserveOn;
 import io.realm.Realm;
 import io.realm.RealmResults;
 

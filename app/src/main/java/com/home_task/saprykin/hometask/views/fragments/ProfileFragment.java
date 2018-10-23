@@ -12,6 +12,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.bumptech.glide.Glide;
 import com.home_task.saprykin.hometask.AppContext;
 import com.home_task.saprykin.hometask.R;
+import com.home_task.saprykin.hometask.model.InternalSettings;
 import com.home_task.saprykin.hometask.presenters.ProfilePresenter;
 import com.home_task.saprykin.hometask.presenters.interfaces.ProfileView;
 import com.home_task.saprykin.hometask.views.base.BaseFragment;
@@ -90,6 +91,6 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     }
 
     private void saveUserLogin(String userLogin) {
-        ((AppContext) getActivity().getApplicationContext()).saveUserLogin(getActivity().getLocalClassName(), userLogin);
+        InternalSettings.getInstance(getActivity()).saveUserLogin(userLogin);
     }
 }
