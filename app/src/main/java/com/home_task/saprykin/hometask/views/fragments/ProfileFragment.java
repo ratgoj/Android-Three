@@ -1,12 +1,16 @@
 package com.home_task.saprykin.hometask.views.fragments;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.bumptech.glide.Glide;
+import com.home_task.saprykin.hometask.AppContext;
 import com.home_task.saprykin.hometask.R;
 import com.home_task.saprykin.hometask.presenters.ProfilePresenter;
 import com.home_task.saprykin.hometask.presenters.interfaces.ProfileView;
@@ -19,6 +23,8 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     private static final String PROFILE_TAG = "Profile Info";
 
     ImageView profileImage;
+    EditText searchProfileInput;
+    ImageButton searchProfileButton;
 
 
     @InjectPresenter
@@ -32,6 +38,12 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     @Override
     protected void initView() {
         profileImage = currentFragmentView.findViewById(R.id.profile_image);
+        searchProfileInput = currentFragmentView.findViewById(R.id.profile_search_input);
+        searchProfileButton = currentFragmentView.findViewById(R.id.profile_search_button);
+        searchProfileButton.setOnClickListener(v -> {
+            saveUserLogin(searchProfileInput.getText().toString());
+            profilePresenter.findProfileInfo(searchProfileInput.getText().toString());
+        });
         profilePresenter.setProfileInfo();
     }
 
@@ -75,5 +87,9 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
         super.hideLoading();
         currentFragmentView.findViewById(R.id.profile_info_layout).setVisibility(View.VISIBLE);
         currentFragmentView.findViewById(R.id.profile_progress_view).setVisibility(View.GONE);
+    }
+
+    private void saveUserLogin(String userLogin) {
+        ((AppContext) getActivity().getApplicationContext()).saveUserLogin(getActivity().getLocalClassName(), userLogin);
     }
 }

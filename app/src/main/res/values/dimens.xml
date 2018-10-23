@@ -2,4 +2,5 @@
 <resources>
     <dimen name="text_title_size">18sp</dimen>
     <dimen name="side_margin">64dp</dimen>
+    <dimen name="search_side_margin">8dp</dimen>
 </resources>

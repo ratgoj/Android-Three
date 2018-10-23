@@ -10,6 +10,7 @@
     <string name="profile_nick_name">\@NickName</string>
     <string name="profile_full_name_label">Full name:  </string>
     <string name="profile_full_name">Saprykin Andrey</string>
+    <string name="find_profile_hint">GitHub user login</string>
 
     <string name="repositories_title_text">Yours repositories</string>
     <string name="repositories_url_label">Url: </string>

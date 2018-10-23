@@ -16,4 +16,6 @@ public interface RepositoryVew extends BaseView {
 
     @StateStrategyType(AddToEndSingleStrategy.class)
     void setSearchText(String text);
+
+    void loadUserRepo();
 }
