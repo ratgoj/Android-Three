@@ -4,11 +4,13 @@ import com.home_task.saprykin.hometask.model.entities.models.RepoModel;
 import com.home_task.saprykin.hometask.model.network.NetworkHelper;
 import com.home_task.saprykin.hometask.model.realm.models.RealmRepoModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by andrejsaprykin on 23/10/2018.
@@ -50,17 +52,27 @@ public class RealmReposInfoWorker implements ReposInfoData {
             public void onError(Throwable e) {
                 if (realmInstance.isInTransaction())
                     realmInstance.cancelTransaction();
+                repoModelObserver.onError(e);
             }
         });
     }
 
     @Override
     public List<RepoModel> findUserRepos(String userLogin) {
-        return null;
+        List<RepoModel> result = null;
+        RealmResults<RealmRepoModel> realmResults = Realm.getDefaultInstance().where(RealmRepoModel.class).equalTo("repoUserLogin", userLogin).findAll();
+        if (!realmResults.isEmpty()) {
+            List<RealmRepoModel> realmRepoModels = Realm.getDefaultInstance().copyFromRealm(realmResults);
+            result = new ArrayList<>();
+            for (RealmRepoModel realmModel : realmRepoModels) {
+                result.add(new RepoModel(realmModel.getRepoFullName(), realmModel.getRepoUrlPath()));
+            }
+        }
+        return result;
     }
 
     @Override
     public void deleteUserRepos(String userLogin) {
-
+        realmInstance.where(RealmRepoModel.class).equalTo("repoUserLogin", userLogin).findAll().deleteAllFromRealm();
     }
 }

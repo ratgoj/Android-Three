@@ -45,7 +45,12 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
             saveUserLogin(searchProfileInput.getText().toString());
             profilePresenter.findProfileInfo(searchProfileInput.getText().toString());
         });
-        profilePresenter.setProfileInfo();
+        String savedUserLogin = InternalSettings.getInstance(getActivity()).getSavedUserLogin();
+        if (savedUserLogin != null && !savedUserLogin.isEmpty()) {
+            profilePresenter.findProfileInfo(savedUserLogin);
+        } else {
+            profilePresenter.setProfileInfo();
+        }
     }
 
 
