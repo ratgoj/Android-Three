@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.home_task.saprykin.hometask.BuildConfig;
 
-import okhttp3.logging.HttpLoggingInterceptor;
+import javax.inject.Inject;
+
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,6 +19,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkService {
     private Gson gson = new GsonBuilder().setDateFormat("dd-mm-yyyy").create();
 
+    @Inject
+    public NetworkService() {
+    }
 
     public <S> S createService(Class<S> serviceClass) {
         return new Retrofit.Builder()

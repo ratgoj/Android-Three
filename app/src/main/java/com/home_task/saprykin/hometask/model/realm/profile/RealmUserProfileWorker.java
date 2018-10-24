@@ -1,7 +1,11 @@
 package com.home_task.saprykin.hometask.model.realm.profile;
 
 import com.home_task.saprykin.hometask.model.entities.models.UserGitHub;
+import com.home_task.saprykin.hometask.model.network.DaggerNetworkComponent;
+import com.home_task.saprykin.hometask.model.network.NetworkComponent;
+import com.home_task.saprykin.hometask.model.network.NetworkContract;
 import com.home_task.saprykin.hometask.model.network.NetworkHelper;
+import com.home_task.saprykin.hometask.model.network.NetworkModule;
 import com.home_task.saprykin.hometask.model.realm.models.RealmProfileModel;
 
 import io.reactivex.Observable;
@@ -16,11 +20,12 @@ import io.realm.RealmResults;
 
 public class RealmUserProfileWorker implements UsersProfilesData {
     Realm realmInstance;
-    NetworkHelper networkHelper;
+    NetworkContract networkHelper;
 
     public RealmUserProfileWorker() {
         this.realmInstance = Realm.getDefaultInstance();
-        this.networkHelper = NetworkHelper.getInstance();
+        NetworkComponent networkComponent = DaggerNetworkComponent.builder().networkModule(new NetworkModule()).build();
+        networkHelper =  networkComponent.getNetworkHelper();
     }
 
     @Override

@@ -5,6 +5,8 @@ import com.home_task.saprykin.hometask.model.entities.models.UserGitHub;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -14,29 +16,25 @@ import io.reactivex.schedulers.Schedulers;
  * Created by andrejsaprykin on 17/10/2018.
  */
 
-public class NetworkHelper {
+public class NetworkHelper implements NetworkContract {
 
-    private static NetworkHelper instance;
-    private NetworkApiRequest networkApiRequest;
+    @Inject
+    NetworkApiRequest networkApiRequest;
 
-    private NetworkHelper() {
-        networkApiRequest = new NetworkService().createService(NetworkApiRequest.class);
+    @Inject
+    public NetworkHelper(NetworkApiRequest apiRequest) {
+        this.networkApiRequest = apiRequest;
     }
 
-    public static NetworkHelper getInstance() {
-        if(instance == null){
-            instance = new NetworkHelper();
-        }
-        return instance;
-    }
-
-    public Observable<UserGitHub> getUser(String user){
+    @Override
+    public Observable<UserGitHub> getUser(String user) {
         return networkApiRequest.getUser(user)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
     }
 
-    public Flowable<List<RepoModel>> getRepos(String userLogin){
+    @Override
+    public Flowable<List<RepoModel>> getRepos(String userLogin) {
         return networkApiRequest.getRepos(userLogin)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
