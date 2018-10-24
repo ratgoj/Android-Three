@@ -7,22 +7,20 @@ import dagger.Provides;
 
 @Module
 public class NetworkModule {
-    @Inject
+
     NetworkService networkService;
 
-    @Inject
-    NetworkApiRequest networkApiRequest;
-
     public NetworkModule() {
+        this.networkService = new NetworkService();
     }
 
     @Provides
-    public NetworkApiRequest getNetworkApiRequest() {
-        return networkService.createService(NetworkApiRequest.class);
+    public NetworkService getNetworkService(){
+        return networkService;
     }
 
     @Provides
     public NetworkContract getNetworkContract() {
-        return new NetworkHelper(networkApiRequest);
+        return new NetworkHelper(networkService);
     }
 }

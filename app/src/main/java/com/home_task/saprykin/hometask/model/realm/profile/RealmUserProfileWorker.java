@@ -1,10 +1,13 @@
 package com.home_task.saprykin.hometask.model.realm.profile;
 
 import com.home_task.saprykin.hometask.model.entities.models.UserGitHub;
+import com.home_task.saprykin.hometask.model.network.DaggerNetworkApiComponent;
 import com.home_task.saprykin.hometask.model.network.DaggerNetworkComponent;
+import com.home_task.saprykin.hometask.model.network.ModuleNetwork;
+import com.home_task.saprykin.hometask.model.network.NetworkApiComponent;
+import com.home_task.saprykin.hometask.model.network.NetworkApiRequest;
 import com.home_task.saprykin.hometask.model.network.NetworkComponent;
 import com.home_task.saprykin.hometask.model.network.NetworkContract;
-import com.home_task.saprykin.hometask.model.network.NetworkHelper;
 import com.home_task.saprykin.hometask.model.network.NetworkModule;
 import com.home_task.saprykin.hometask.model.realm.models.RealmProfileModel;
 
@@ -20,12 +23,15 @@ import io.realm.RealmResults;
 
 public class RealmUserProfileWorker implements UsersProfilesData {
     Realm realmInstance;
-    NetworkContract networkHelper;
+    //NetworkContract networkHelper;
+    String userLogin = "";
+    NetworkApiComponent apiComponent;
 
     public RealmUserProfileWorker() {
         this.realmInstance = Realm.getDefaultInstance();
-        NetworkComponent networkComponent = DaggerNetworkComponent.builder().networkModule(new NetworkModule()).build();
-        networkHelper =  networkComponent.getNetworkHelper();
+        /*NetworkComponent networkComponent = DaggerNetworkComponent.builder().networkModule(new NetworkModule()).build();
+        networkHelper =  networkComponent.getNetworkHelper();*/
+        apiComponent = DaggerNetworkApiComponent.builder().moduleNetwork(new ModuleNetwork(userLogin)).build();
     }
 
     @Override
@@ -62,16 +68,18 @@ public class RealmUserProfileWorker implements UsersProfilesData {
                 userGitHubObserver.onComplete();
             }
         };
-        this.networkHelper.getUser(userLogin).subscribe(userInputData);
+        apiComponent.getUser(userLogin).subscribe(userInputData);
     }
 
     @Override
     public void deleteUser(String userLogin) {
+        this.userLogin = userLogin;
         realmInstance.where(RealmProfileModel.class).equalTo("userLogin", userLogin).findAll().deleteAllFromRealm();
     }
 
     @Override
     public Observable<UserGitHub> getUser(String userLogin) {
+        this.userLogin = userLogin;
         return new Observable<UserGitHub>() {
             @Override
             protected void subscribeActual(Observer<? super UserGitHub> observer) {
@@ -82,7 +90,7 @@ public class RealmUserProfileWorker implements UsersProfilesData {
 
     private UserGitHub findUser(String userLogin) {
         UserGitHub userProfile = null;
-        RealmResults<RealmProfileModel> userResult = realmInstance.where(RealmProfileModel.class).equalTo("userLogin", userLogin).findAll();
+        RealmResults<RealmProfileModel> userResult = Realm.getDefaultInstance().where(RealmProfileModel.class).equalTo("userLogin", userLogin).findAll();
         if (!userResult.isEmpty()) {
             RealmProfileModel profileModel = userResult.last();
             userProfile = new UserGitHub();

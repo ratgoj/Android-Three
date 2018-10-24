@@ -18,12 +18,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class NetworkHelper implements NetworkContract {
 
-    @Inject
     NetworkApiRequest networkApiRequest;
 
     @Inject
-    public NetworkHelper(NetworkApiRequest apiRequest) {
-        this.networkApiRequest = apiRequest;
+    public NetworkHelper(NetworkService networkService) {
+        networkApiRequest =
+                networkService
+                        .createService(NetworkApiRequest.class);
     }
 
     @Override

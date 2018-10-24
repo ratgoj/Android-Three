@@ -4,7 +4,6 @@ import com.home_task.saprykin.hometask.model.entities.models.RepoModel;
 import com.home_task.saprykin.hometask.model.network.DaggerNetworkComponent;
 import com.home_task.saprykin.hometask.model.network.NetworkComponent;
 import com.home_task.saprykin.hometask.model.network.NetworkContract;
-import com.home_task.saprykin.hometask.model.network.NetworkHelper;
 import com.home_task.saprykin.hometask.model.network.NetworkModule;
 import com.home_task.saprykin.hometask.model.realm.models.RealmRepoModel;
 
@@ -22,6 +21,7 @@ import io.realm.RealmResults;
 
 public class RealmReposInfoWorker implements ReposInfoData {
     Realm realmInstance;
+    String userLogin = "";
     NetworkContract networkHelper;
 
     public RealmReposInfoWorker() {
