@@ -14,6 +14,8 @@ import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -27,9 +29,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class ModuleNetwork {
 
+    UserGitHub currentUser;
 
-    public ModuleNetwork() {
-
+    public ModuleNetwork(UserGitHub user) {
+        currentUser = user;
     }
 
     @Provides
@@ -60,12 +63,18 @@ public class ModuleNetwork {
     }
 
     @Provides
-    Observable<UserGitHub> getUser(Retrofit retrofit) {
-        return retrofit.create(NetworkApiRequest.class).getUser("fern");
+    Observable<UserGitHub> getUser(Retrofit retrofit, @Named("login") String userLogin) {
+        return retrofit.create(NetworkApiRequest.class).getUser(userLogin).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
     }
 
     @Provides
-    Flowable<List<RepoModel>> getRepos(Retrofit retrofit) {
-        return retrofit.create(NetworkApiRequest.class).getRepos("fern");
+    Flowable<List<RepoModel>> getRepos(Retrofit retrofit, @Named("login") String userLogin) {
+        return retrofit.create(NetworkApiRequest.class).getRepos(userLogin).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io());
+    }
+
+    @Provides
+    @Named("login")
+    String userLogin() {
+        return currentUser.getUserLogin();
     }
 }
