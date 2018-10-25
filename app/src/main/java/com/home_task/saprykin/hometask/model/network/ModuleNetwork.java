@@ -8,6 +8,8 @@ import com.home_task.saprykin.hometask.model.entities.models.UserGitHub;
 
 import java.util.List;
 
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Flowable;
@@ -25,19 +27,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class ModuleNetwork {
 
-    String userLogin;
 
-    public ModuleNetwork(String userLogin) {
-        this.userLogin = userLogin;
+    public ModuleNetwork() {
+
     }
 
     @Provides
-    public Gson gson(){
+    public Gson gson() {
         return new GsonBuilder().setDateFormat("dd-mm-yyyy").create();
     }
 
     @Provides
-    public GsonConverterFactory gsonConverterFactory(Gson gson){
+    public GsonConverterFactory gsonConverterFactory(Gson gson) {
         return GsonConverterFactory.create(gson);
     }
 
@@ -50,7 +51,7 @@ public class ModuleNetwork {
     }
 
     @Provides
-    Retrofit getRetrofit(OkHttpClient okHttpClient, GsonConverterFactory gsonConverterFactory){
+    Retrofit getRetrofit(OkHttpClient okHttpClient, GsonConverterFactory gsonConverterFactory) {
         return new Retrofit.Builder()
                 .baseUrl("https://api.github.com/")
                 .addConverterFactory(gsonConverterFactory)
@@ -59,12 +60,12 @@ public class ModuleNetwork {
     }
 
     @Provides
-    Observable<UserGitHub> getUser(Retrofit retrofit){
-        return retrofit.create(NetworkApiRequest.class).getUser(userLogin);
+    Observable<UserGitHub> getUser(Retrofit retrofit) {
+        return retrofit.create(NetworkApiRequest.class).getUser("fern");
     }
 
     @Provides
-    Flowable<List<RepoModel>> getRepos(Retrofit retrofit){
-        return retrofit.create(NetworkApiRequest.class).getRepos(userLogin);
+    Flowable<List<RepoModel>> getRepos(Retrofit retrofit) {
+        return retrofit.create(NetworkApiRequest.class).getRepos("fern");
     }
 }

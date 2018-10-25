@@ -21,7 +21,6 @@ import io.realm.RealmResults;
 
 public class RealmReposInfoWorker implements ReposInfoData {
     Realm realmInstance;
-    String userLogin = "";
     NetworkContract networkHelper;
 
     public RealmReposInfoWorker() {
