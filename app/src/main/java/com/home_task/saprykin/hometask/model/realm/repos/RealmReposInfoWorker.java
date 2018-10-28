@@ -1,7 +1,10 @@
 package com.home_task.saprykin.hometask.model.realm.repos;
 
 import com.home_task.saprykin.hometask.model.entities.models.RepoModel;
-import com.home_task.saprykin.hometask.model.network.NetworkHelper;
+import com.home_task.saprykin.hometask.model.network.DaggerNetworkComponent;
+import com.home_task.saprykin.hometask.model.network.NetworkComponent;
+import com.home_task.saprykin.hometask.model.network.NetworkContract;
+import com.home_task.saprykin.hometask.model.network.NetworkModule;
 import com.home_task.saprykin.hometask.model.realm.models.RealmRepoModel;
 
 import java.util.ArrayList;
@@ -18,11 +21,12 @@ import io.realm.RealmResults;
 
 public class RealmReposInfoWorker implements ReposInfoData {
     Realm realmInstance;
-    NetworkHelper networkHelper;
+    NetworkContract networkHelper;
 
     public RealmReposInfoWorker() {
         this.realmInstance = Realm.getDefaultInstance();
-        this.networkHelper = NetworkHelper.getInstance();
+        NetworkComponent networkComponent = DaggerNetworkComponent.builder().networkModule(new NetworkModule()).build();
+        networkHelper =  networkComponent.getNetworkHelper();
     }
 
     @Override

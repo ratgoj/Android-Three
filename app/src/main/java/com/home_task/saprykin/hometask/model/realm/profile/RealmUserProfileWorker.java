@@ -1,7 +1,9 @@
 package com.home_task.saprykin.hometask.model.realm.profile;
 
 import com.home_task.saprykin.hometask.model.entities.models.UserGitHub;
-import com.home_task.saprykin.hometask.model.network.NetworkHelper;
+import com.home_task.saprykin.hometask.model.network.DaggerNetworkApiComponent;
+import com.home_task.saprykin.hometask.model.network.ModuleNetwork;
+import com.home_task.saprykin.hometask.model.network.NetworkApiComponent;
 import com.home_task.saprykin.hometask.model.realm.models.RealmProfileModel;
 
 import io.reactivex.Observable;
@@ -16,15 +18,19 @@ import io.realm.RealmResults;
 
 public class RealmUserProfileWorker implements UsersProfilesData {
     Realm realmInstance;
-    NetworkHelper networkHelper;
+    NetworkApiComponent apiComponent;
+    UserGitHub currentUser;
 
     public RealmUserProfileWorker() {
         this.realmInstance = Realm.getDefaultInstance();
-        this.networkHelper = NetworkHelper.getInstance();
+        currentUser = new UserGitHub();
+        currentUser.setUserLogin("ratgoj");
+        apiComponent = DaggerNetworkApiComponent.builder().moduleNetwork(new ModuleNetwork(currentUser)).build();
     }
 
     @Override
     public void inputUserData(String userLogin, Observer<UserGitHub> userGitHubObserver) {
+        currentUser.setUserLogin(userLogin);
         Observer<UserGitHub> userInputData = new Observer<UserGitHub>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -46,7 +52,7 @@ public class RealmUserProfileWorker implements UsersProfilesData {
 
             @Override
             public void onError(Throwable e) {
-                if(realmInstance.isInTransaction())
+                if (realmInstance.isInTransaction())
                     realmInstance.cancelTransaction();
                 userGitHubObserver.onError(e);
             }
@@ -57,7 +63,8 @@ public class RealmUserProfileWorker implements UsersProfilesData {
                 userGitHubObserver.onComplete();
             }
         };
-        this.networkHelper.getUser(userLogin).subscribe(userInputData);
+        //networkHelper.getUser(userLogin).subscribe(userInputData);
+        apiComponent.getUser().subscribe(userInputData);
     }
 
     @Override
@@ -77,7 +84,7 @@ public class RealmUserProfileWorker implements UsersProfilesData {
 
     private UserGitHub findUser(String userLogin) {
         UserGitHub userProfile = null;
-        RealmResults<RealmProfileModel> userResult = realmInstance.where(RealmProfileModel.class).equalTo("userLogin", userLogin).findAll();
+        RealmResults<RealmProfileModel> userResult = Realm.getDefaultInstance().where(RealmProfileModel.class).equalTo("userLogin", userLogin).findAll();
         if (!userResult.isEmpty()) {
             RealmProfileModel profileModel = userResult.last();
             userProfile = new UserGitHub();
