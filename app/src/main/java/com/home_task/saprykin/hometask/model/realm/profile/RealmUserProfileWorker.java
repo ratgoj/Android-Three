@@ -18,7 +18,6 @@ import io.realm.RealmResults;
 
 public class RealmUserProfileWorker implements UsersProfilesData {
     Realm realmInstance;
-    //NetworkContract networkHelper;
     NetworkApiComponent apiComponent;
     UserGitHub currentUser;
 
@@ -26,8 +25,6 @@ public class RealmUserProfileWorker implements UsersProfilesData {
         this.realmInstance = Realm.getDefaultInstance();
         currentUser = new UserGitHub();
         currentUser.setUserLogin("ratgoj");
-        //NetworkComponent networkComponent = DaggerNetworkComponent.builder().networkModule(new NetworkModule()).build();
-        //networkHelper = networkComponent.getNetworkHelper();
         apiComponent = DaggerNetworkApiComponent.builder().moduleNetwork(new ModuleNetwork(currentUser)).build();
     }
 
